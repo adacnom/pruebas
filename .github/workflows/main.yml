@@ -18,7 +18,13 @@ jobs:
           target_branch: staging
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: delete branch
-        uses: SvanBoxel/delete-merged-branch@main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Delete merged feature branch
+        run: |
+          git push origin --delete ${{ github.ref }}
+        
+      # Optional: Clean up tags if required
+      - name: Clean up local tags
+        run: |
+          git fetch --tags
+          git tag -l | xargs git tag -d
+          git push --tags --delete origin
