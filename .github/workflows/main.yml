@@ -17,3 +17,10 @@ jobs:
           type: now
           target_branch: staging
           github_token: ${{ secrets.GITHUB_TOKEN }}
+  delete-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: delete branch
+        uses: SvanBoxel/delete-merged-branch@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
