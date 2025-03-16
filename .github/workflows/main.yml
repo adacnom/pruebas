@@ -2,7 +2,7 @@ name: automated-testing-load
 
 on:
   push:
-    branches: ["feature/**" ]
+    branches: ["staging", "feature/**" ]
   workflow_dispatch:
 
 jobs:
@@ -12,6 +12,7 @@ jobs:
       - uses: actions/checkout@master
 
       - name: Merge any -> staging
+        if: startsWith(github.ref, 'refs/heads/feature/')  # Check if the branch is a feature branch
         uses: devmasx/merge-branch@master
         with:
           type: now
@@ -19,6 +20,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Delete merged feature branch
+        if: startsWith(github.ref, 'refs/heads/feature/')  # Check if the branch is a feature branch
         run: |
           git push origin --delete ${{ github.ref }}
         
