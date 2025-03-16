@@ -26,5 +26,3 @@ jobs:
       - name: Clean up local tags
         run: |
           git fetch --tags
-          git tag -l | xargs git tag -d
-          git push --tags --delete origin
